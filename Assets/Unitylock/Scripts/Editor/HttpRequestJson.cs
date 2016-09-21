@@ -15,11 +15,25 @@ namespace Unitylock.Editor
             Process(request, response => HandleResponse(response, successCallback, errorCallback));
         }
 
+        public void Post(string url, string body, Action<string> successCallback = null,
+            Action<string> errorCallback = null)
+        {
+            var request = WebRequest.Create(url) as HttpWebRequest;
+            request.Method = "POST";
+            HandlePostOrPut(request, body, successCallback, errorCallback);
+        }
+
         public void Put(string url, string body, Action<string> successCallback = null,
             Action<string> errorCallback = null)
         {
             var request = WebRequest.Create(url) as HttpWebRequest;
             request.Method = "PUT";
+            HandlePostOrPut(request, body, successCallback, errorCallback);
+        }
+
+        void HandlePostOrPut(HttpWebRequest request, string body, Action<string> successCallback = null,
+            Action<string> errorCallback = null)
+        {
             request.Headers.Add("ContentType", "application/json; charset=UTF-8");
 
             byte[] data = Encoding.UTF8.GetBytes(body);

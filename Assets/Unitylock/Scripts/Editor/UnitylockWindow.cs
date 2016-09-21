@@ -37,9 +37,14 @@ namespace Unitylock.Editor
             RenderFileList();
 
             // Sync
-            if (GUILayout.Button("SyncFiles"))
+            if (GUILayout.Button("Sync"))
             {
-                Sync();
+                client.Search();
+            }
+
+            if (GUILayout.Button("Touch"))
+            {
+                client.Touch();
             }
         }
 
@@ -78,11 +83,6 @@ namespace Unitylock.Editor
             }
 
             GUILayout.EndScrollView();
-        }
-
-        void Sync()
-        {
-            client.Search();
         }
 
         void Update()
